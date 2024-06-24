@@ -35,10 +35,13 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        // Check if the user is authenticated using specified guard
         if ($this->auth->guard($guard)->guest()) {
+            // Return an error response if the user is unauthenticated (HTTP status code 401)
             return response('Unauthorized.', 401);
         }
 
+        // Proceed to the next middleware if authenticated
         return $next($request);
     }
 }
